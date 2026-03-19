@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/bookings")
 @CrossOrigin(origins = "*")
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class BookingController {
     private final BookingService bookingService;
-    public BookingController(BookingService bookingService) {
-        this.bookingService = bookingService;
-    }
 
     // API 3: Xử lý Check-in
     @PostMapping("/checkin")

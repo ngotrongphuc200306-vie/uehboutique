@@ -10,13 +10,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/rooms")
 @CrossOrigin(origins = "*") // Cho phép Frontend (React/Vue) gọi API mà không bị chặn lỗi CORS
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class RoomController {
     private final RoomService roomService;
-    // Tự viết Constructor để Spring Boot tiêm (inject) BookingService vào
-    public RoomController(RoomService roomService) {
-        this.roomService = roomService;
-    }
 
     @GetMapping
     public ResponseEntity<List<Room>> getAllRooms() {
