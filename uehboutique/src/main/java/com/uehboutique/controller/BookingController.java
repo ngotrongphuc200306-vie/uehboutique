@@ -6,6 +6,7 @@ import com.uehboutique.dto.request.CheckInRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -28,6 +29,18 @@ public class BookingController {
         } catch (Exception e) {
             // Nếu có lỗi (VD: Phòng không trống), trả về thông báo lỗi cho Frontend hiển thị popup
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping
+    public ResponseEntity<?> getAllBookings() {
+        try {
+            List<Booking> bookings = bookingService.getAllBookings();
+            if (bookings.isEmpty()) {
+                return ResponseEntity.noContent().build(); // Trả về 204 nếu danh sách trống
+            }
+            return ResponseEntity.ok(bookings); // Trả về 200 kèm danh sách
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Lỗi khi lấy danh sách: " + e.getMessage());
         }
     }
 }

@@ -18,7 +18,7 @@ public class Invoice {
     @JoinColumn(name = "bookingId", nullable = false, unique = true)
     private Booking booking;
 
-    @Column(nullable = false)
+    @Column(name ="total_amount",nullable = false)
     private BigDecimal totalAmount;
 
     @Column(nullable = false)

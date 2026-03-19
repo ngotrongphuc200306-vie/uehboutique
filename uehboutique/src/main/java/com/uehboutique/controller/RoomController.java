@@ -2,6 +2,7 @@ package com.uehboutique.controller;
 
 import com.uehboutique.entity.Room;
 import com.uehboutique.service.RoomService;
+import com.uehboutique.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,4 +24,5 @@ public class RoomController {
     public ResponseEntity<List<Room>> getAllRoomStatus(@RequestParam String status) {
         return ResponseEntity.ok(roomService.getRoomsByStatus(status));
     }
+
 }

@@ -2,6 +2,7 @@ package com.uehboutique.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Staff")
@@ -17,6 +18,7 @@ public class Staff {
     @Column(nullable = false, length = 50, unique = true) // mỗi staff có 1 username riêng
     private String username;
 
+    @JsonIgnore
     @Column(nullable = false, length = 255)
     private String password;
 

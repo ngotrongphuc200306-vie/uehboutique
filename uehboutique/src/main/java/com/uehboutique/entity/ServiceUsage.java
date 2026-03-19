@@ -24,6 +24,6 @@ public class ServiceUsage {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false)
+    @Column(name = "usage_time",nullable = false)
     private LocalDateTime usageTime;
 }
