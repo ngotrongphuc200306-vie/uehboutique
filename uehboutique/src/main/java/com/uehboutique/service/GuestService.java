@@ -35,4 +35,16 @@ public class GuestService {
     public Optional<Guest> getGuestByPhone(String phone) {
         return guestRepository.findByPhone(phone);
     }
+
+    // 5. Cập nhật thông tin khách hàng
+    public Guest updateGuest(Integer id, Guest guestDetails) {
+        Guest guest = guestRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy khách hàng ID: " + id));
+
+        guest.setGuestName(guestDetails.getGuestName());
+        guest.setPhone(guestDetails.getPhone());
+        // Bác có thêm trường nào (CCCD, Email...) thì set thêm ở đây
+
+        return guestRepository.save(guest);
+    }
 }

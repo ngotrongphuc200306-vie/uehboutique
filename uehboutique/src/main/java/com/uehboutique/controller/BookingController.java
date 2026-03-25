@@ -36,15 +36,34 @@ public class BookingController {
     @GetMapping
     public ResponseEntity<?> getAllBookings() {
         try {
-            List<Booking> bookings = bookingService.getAllBookings();
-            if (bookings.isEmpty()) {
-                return ResponseEntity.noContent().build(); // Trả về 204 nếu danh sách trống
-            }
-            return ResponseEntity.ok(bookings); // Trả về 200 kèm danh sách
+            List<Booking> rawBookings = bookingService.getAllBookings();
+
+            // Cách an toàn: Dùng Stream để sắp xếp và gom vào một List mới hoàn toàn
+            // Không sửa trực tiếp lên list của Database trả về để tránh lỗi 500
+            List<Booking> sortedBookings = rawBookings.stream().sorted((b1, b2) -> {
+                try {
+                    // Thêm .trim() để phòng trường hợp trong DB số phòng bị dính khoảng trắng
+                    int room1 = (b1.getRoom() != null && b1.getRoom().getRoomNumber() != null)
+                            ? Integer.parseInt(b1.getRoom().getRoomNumber().trim()) : 0;
+                    int room2 = (b2.getRoom() != null && b2.getRoom().getRoomNumber() != null)
+                            ? Integer.parseInt(b2.getRoom().getRoomNumber().trim()) : 0;
+                    return Integer.compare(room1, room2);
+                } catch (Exception ex) {
+                    return 0; // Nếu phòng nào tên chứa chữ không parse số được thì bỏ qua, không cho sập Server
+                }
+            }).collect(java.util.stream.Collectors.toList());
+//
+//            if (sortedBookings.isEmpty()) {
+//                return ResponseEntity.noContent().build();
+//            }
+            return ResponseEntity.ok(sortedBookings);
+
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Lỗi khi lấy danh sách: " + e.getMessage());
+            e.printStackTrace(); // In log đỏ ra console của IntelliJ/Eclipse để dễ tìm
+            return ResponseEntity.internalServerError().body("Lỗi ở Backend: " + e.getMessage());
         }
     }
+
 
     @PutMapping("/{bookingId}/transfer")
     public ResponseEntity<?> transferRoom(@PathVariable Integer bookingId, @RequestParam Integer newRoomId) {

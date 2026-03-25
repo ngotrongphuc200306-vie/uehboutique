@@ -165,7 +165,7 @@ function RoomStatus() {
                         >
                             <h3 style={{ margin: '5px 0', fontSize: '20px' }}>{room.roomNumber}</h3>
 
-                            {/* ĐÃ HIỂN THỊ SẴN LOẠI PHÒNG NGAY TRÊN THẺ CHO BÁC */}
+                            {/* ĐÃ HIỂN THỊ SẴN LOẠI PHÒNG NGAY TRÊN THẺ */}
                             <p style={{ margin: '0 0 5px 0', fontSize: '13px', opacity: 0.9 }}>
                                 {room.typeName}
                             </p>

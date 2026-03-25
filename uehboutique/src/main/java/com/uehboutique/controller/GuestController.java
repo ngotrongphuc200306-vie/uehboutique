@@ -50,4 +50,13 @@ public class GuestController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Guest> updateGuest(@PathVariable Integer id, @RequestBody Guest guest) {
+        try {
+            return ResponseEntity.ok(guestService.updateGuest(id, guest));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
